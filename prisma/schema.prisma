@@ -1,0 +1,393 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @default(cuid())
+  name          String
+  email         String     @unique
+  password      String
+  role          Role       @default(VENDEDOR)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  leads         Lead[]
+  proposals     Proposal[]
+  appointments  Appointment[]
+  measurements  Measurement[]
+  productionOrders ProductionOrder[]
+  deliveries    Delivery[]
+  installations Installation[]
+  supportTickets SupportTicket[]
+  sentMessages  Message[]
+  chatParticipations Chat[] @relation("ChatParticipants")
+}
+
+enum Role {
+  ADMIN
+  GERENTE
+  VENDEDOR
+  MEDIDOR
+  PRODUCAO
+  ENTREGADOR
+  MONTADOR
+  ATENDIMENTO
+}
+
+model Lead {
+  id                String      @id @default(cuid())
+  name              String
+  email             String
+  phone             String
+  address           String?
+  city              String?
+  state             String?
+  interests         String[]    // Tipo de móvel, estilo, etc.
+  source            String?     // Origem do lead (site, indicação, etc.)
+  status            LeadStatus  @default(NOVO)
+  notes             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  userId            String      // Responsável pelo lead
+  user              User        @relation(fields: [userId], references: [id])
+  proposals         Proposal[]
+  appointments      Appointment[]
+  measurements      Measurement[]
+  chats             Chat[]
+}
+
+enum LeadStatus {
+  NOVO
+  CONTATADO
+  EM_NEGOCIACAO
+  CONVERTIDO
+  PERDIDO
+}
+
+model Proposal {
+  id                String      @id @default(cuid())
+  title             String
+  description       String?
+  items             ProposalItem[]
+  totalValue        Float
+  discount          Float       @default(0)
+  finalValue        Float
+  status            ProposalStatus @default(PENDENTE)
+  validUntil        DateTime?
+  notes             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  leadId            String
+  lead              Lead        @relation(fields: [leadId], references: [id])
+  userId            String      // Responsável pela proposta
+  user              User        @relation(fields: [userId], references: [id])
+  productionOrder   ProductionOrder?
+}
+
+model ProposalItem {
+  id                String      @id @default(cuid())
+  description       String
+  quantity          Int
+  unitPrice         Float
+  totalPrice        Float
+  proposalId        String
+  proposal          Proposal    @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+}
+
+enum ProposalStatus {
+  PENDENTE
+  ENVIADA
+  ACEITA
+  RECUSADA
+  EXPIRADA
+}
+
+model Appointment {
+  id                String      @id @default(cuid())
+  title             String
+  description       String?
+  date              DateTime
+  status            AppointmentStatus @default(AGENDADO)
+  type              AppointmentType
+  notes             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  leadId            String
+  lead              Lead        @relation(fields: [leadId], references: [id])
+  userId            String      // Responsável pelo agendamento
+  user              User        @relation(fields: [userId], references: [id])
+}
+
+enum AppointmentStatus {
+  AGENDADO
+  CONFIRMADO
+  CONCLUIDO
+  CANCELADO
+  REAGENDADO
+}
+
+enum AppointmentType {
+  VISITA_INICIAL
+  MEDICAO
+  APRESENTACAO_PROPOSTA
+  ACOMPANHAMENTO
+  ENTREGA
+  MONTAGEM
+}
+
+model Measurement {
+  id                String      @id @default(cuid())
+  title             String
+  description       String?
+  measurementDate   DateTime
+  rooms             MeasurementRoom[]
+  status            MeasurementStatus @default(PENDENTE)
+  notes             String?
+  photos            String[]    // URLs das fotos
+  files             String[]    // URLs dos arquivos (PDFs, CADs, etc.)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  leadId            String
+  lead              Lead        @relation(fields: [leadId], references: [id])
+  userId            String      // Responsável pela medição
+  user              User        @relation(fields: [userId], references: [id])
+}
+
+model MeasurementRoom {
+  id                String      @id @default(cuid())
+  roomName          String
+  width             Float
+  height            Float
+  depth             Float
+  observations      String?
+  measurementId     String
+  measurement       Measurement @relation(fields: [measurementId], references: [id], onDelete: Cascade)
+}
+
+enum MeasurementStatus {
+  PENDENTE
+  EM_ANDAMENTO
+  CONCLUIDA
+  CANCELADA
+}
+
+model ProductionOrder {
+  id                String      @id @default(cuid())
+  orderNumber       String      @unique
+  description       String?
+  startDate         DateTime?
+  endDate           DateTime?
+  status            ProductionStatus @default(AGUARDANDO)
+  materials         Material[]
+  notes             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  proposalId        String      @unique
+  proposal          Proposal    @relation(fields: [proposalId], references: [id])
+  userId            String      // Responsável pela produção
+  user              User        @relation(fields: [userId], references: [id])
+  deliveries        Delivery[]
+}
+
+enum ProductionStatus {
+  AGUARDANDO
+  EM_PRODUCAO
+  PRODUZIDO
+  FINALIZADO
+  CANCELADO
+}
+
+model Material {
+  id                String      @id @default(cuid())
+  name              String
+  description       String?
+  quantity          Float
+  unit              String      // ex: m², unidade, etc.
+  available         Boolean     @default(true)
+  productionOrderId String
+  productionOrder   ProductionOrder @relation(fields: [productionOrderId], references: [id], onDelete: Cascade)
+}
+
+model Delivery {
+  id                String      @id @default(cuid())
+  scheduledDate     DateTime
+  actualDate        DateTime?
+  address           String
+  city              String
+  state             String
+  status            DeliveryStatus @default(AGENDADA)
+  notes             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  productionOrderId String
+  productionOrder   ProductionOrder @relation(fields: [productionOrderId], references: [id])
+  userId            String      // Responsável pela entrega
+  user              User        @relation(fields: [userId], references: [id])
+  installations     Installation[]
+}
+
+enum DeliveryStatus {
+  AGENDADA
+  EM_TRANSITO
+  ENTREGUE
+  CANCELADA
+}
+
+model Installation {
+  id                String      @id @default(cuid())
+  scheduledDate     DateTime
+  completionDate    DateTime?
+  status            InstallationStatus @default(AGENDADA)
+  notes             String?
+  photos            String[]    // URLs das fotos
+  clientSignature   String?     // URL da assinatura do cliente
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  deliveryId        String
+  delivery          Delivery    @relation(fields: [deliveryId], references: [id])
+  userId            String      // Responsável pela montagem
+  user              User        @relation(fields: [userId], references: [id])
+  supportTickets    SupportTicket[]
+}
+
+enum InstallationStatus {
+  AGENDADA
+  EM_ANDAMENTO
+  CONCLUIDA
+  PENDENCIA
+  CANCELADA
+}
+
+model SupportTicket {
+  id                String      @id @default(cuid())
+  title             String
+  description       String
+  priority          TicketPriority @default(MEDIA)
+  status            TicketStatus @default(ABERTO)
+  openedAt          DateTime    @default(now())
+  closedAt          DateTime?
+  resolutionNotes   String?
+  feedbackRating    Int?        // 1-5
+  feedbackComments  String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  installationId    String
+  installation      Installation @relation(fields: [installationId], references: [id])
+  userId            String      // Responsável pelo atendimento
+  user              User        @relation(fields: [userId], references: [id])
+}
+
+enum TicketPriority {
+  BAIXA
+  MEDIA
+  ALTA
+  URGENTE
+}
+
+enum TicketStatus {
+  ABERTO
+  EM_ATENDIMENTO
+  RESOLVIDO
+  FECHADO
+  REABERTO
+}
+
+model Chat {
+  id            String      @id @default(cuid())
+  type          ChatType    @default(CLIENTE)
+  status        ChatStatus  @default(ATIVO)
+  title         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  messages      Message[]
+  leadId        String?
+  lead          Lead?       @relation(fields: [leadId], references: [id])
+  participants  User[]      @relation("ChatParticipants")
+  isWhatsAppIntegrated Boolean @default(false)
+  whatsAppNumber String?
+}
+
+enum ChatType {
+  CLIENTE
+  INTERNO
+  SUPORTE
+}
+
+enum ChatStatus {
+  ATIVO
+  ARQUIVADO
+  FECHADO
+}
+
+model Message {
+  id            String      @id @default(cuid())
+  content       String
+  sentAt        DateTime    @default(now())
+  readAt        DateTime?
+  type          MessageType @default(TEXT)
+  source        MessageSource @default(USER)
+  chatId        String
+  chat          Chat        @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  senderId      String
+  sender        User        @relation(fields: [senderId], references: [id])
+  attachments   Attachment[]
+  isAIGenerated Boolean    @default(false)
+  aiSuggestions AIMessageSuggestion[]
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  LOCATION
+  VOICE
+  VIDEO
+}
+
+enum MessageSource {
+  USER
+  WHATSAPP
+  SYSTEM
+  AI
+}
+
+model Attachment {
+  id            String      @id @default(cuid())
+  name          String
+  fileUrl       String
+  fileType      String
+  fileSize      Int
+  messageId     String
+  message       Message     @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+}
+
+model AIMessageSuggestion {
+  id            String      @id @default(cuid())
+  content       String
+  isUsed        Boolean     @default(false)
+  messageId     String
+  message       Message     @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+}
+
+model WhatsAppIntegration {
+  id                    String      @id @default(cuid())
+  apiKey                String?
+  phoneNumberId         String?
+  businessAccountId     String?
+  isActive              Boolean     @default(false)
+  webhookVerifyToken    String?
+  lastWebhookReceived   DateTime?
+  autoResponderEnabled  Boolean     @default(false)
+  autoResponderMessage  String?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+}
