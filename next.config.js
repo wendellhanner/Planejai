@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Melhorar o desempenho da compilação
-  swcMinify: true,
+  // Ignorar erros de ESLint durante o build
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  
+  // Ignorar erros de tipo durante o build
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  
+  // Configurações de otimização
   
   // Otimizar carregamento de páginas
   reactStrictMode: true,

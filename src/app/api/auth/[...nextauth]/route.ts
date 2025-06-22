@@ -26,7 +26,7 @@ const testUsers = [
   }
 ];
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -95,3 +95,6 @@ export const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+
+// Exportando authOptions para uso em outros arquivos
+export { authOptions };
