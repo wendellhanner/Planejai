@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/components/providers/auth-provider";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,11 +29,11 @@ import {
 import { useState } from "react";
 
 export default function PerfilPage() {
-  const { data: session } = useSession();
+  const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    nome: session?.user?.name || "Administrador",
-    email: session?.user?.email || "admin@example.com",
+    nome: user?.email?.split('@')[0] || "Administrador",
+    email: user?.email || "admin@example.com",
     telefone: "(11) 99999-9999",
     cargo: "Administrador",
     departamento: "Gestão",

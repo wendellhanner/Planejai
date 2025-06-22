@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/components/providers/auth-provider";
 import { Logo } from "@/components/ui/logo";
 import {
   LayoutDashboard,
@@ -183,7 +183,7 @@ const navigation = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { data: session, status } = useSession();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
@@ -213,7 +213,7 @@ export function Sidebar() {
   };
 
   // Verificar se o usuário está autenticado
-  if (status === "loading") {
+  if (isLoading) {
     return (
       <div className="flex h-full flex-col items-center justify-center bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
         <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />

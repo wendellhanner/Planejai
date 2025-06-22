@@ -28,7 +28,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/auth-provider";
-import { UserProfile } from "@/components/user/user-profile";
 import { kpis, clientes, atividades, vendedores, formatCurrency, formatNumber, formatPercentage, getTotalFaturamento, getTotalLeads, getLeadsConvertidos, getTaxaConversao, getTicketMedio } from "@/lib/data";
 
 // Dados de vendas fechadas com métricas detalhadas
@@ -178,7 +177,7 @@ const performanceMetrics = {
 };
 
 export default function DashboardPage() {
-  const { user } = useAuth();
+  const { user, userProfile } = useAuth();
   const [selectedPeriod, setSelectedPeriod] = useState("Mês");
   const [activeTab, setActiveTab] = useState("vendas");
 
@@ -215,15 +214,12 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col space-y-2">
         <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">
-          Olá, {user?.user_metadata?.nome || "Usuário"}
+          Olá, {user?.user_metadata?.nome || user?.email?.split('@')[0] || "Usuário"}
         </h1>
         <p className="text-slate-600 dark:text-slate-400 capitalize text-sm lg:text-base">{formatDate()}</p>
       </div>
       
-      {/* Perfil do Usuário */}
-      <div className="mb-6">
-        <UserProfile />
-      </div>
+
 
       {/* KPIs Grid - Responsivo com ícones ajustados e margens corrigidas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">

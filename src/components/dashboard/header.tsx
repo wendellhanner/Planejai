@@ -1,8 +1,9 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Bell, UserCircle, Settings, CreditCard, LogOut, UserCog, LifeBuoy } from "lucide-react";
+import { useAuth } from "@/components/providers/auth-provider";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +19,16 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { NotificationCenter } from "@/components/ui/notification-center";
 
 // Componente para o perfil do usuário
-function UserProfileDropdown({ userName, userEmail, userRole, userInitial, userRoleColor, onLogout }) {
+interface UserProfileDropdownProps {
+  userName: string;
+  userEmail: string;
+  userRole: string;
+  userInitial: string;
+  userRoleColor: string;
+  onLogout: () => void;
+}
+
+function UserProfileDropdown({ userName, userEmail, userRole, userInitial, userRoleColor, onLogout }: UserProfileDropdownProps) {
   return (
     <div className="flex items-center gap-1">
       {/* Botão de logout para mobile */}
@@ -177,31 +187,29 @@ function UserProfileDropdown({ userName, userEmail, userRole, userInitial, userR
 }
 
 export function Header() {
-  const { data: session } = useSession();
+  const { user, logout } = useAuth();
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
-      // Usar signOut sem redirect automático e depois redirecionar manualmente
-      await signOut({
-        redirect: false,
-        callbackUrl: "/login"
-      });
-
-      // Redirecionar manualmente para garantir que funciona
-      window.location.href = "/login";
+      // Usar o logout do Supabase
+      await logout();
+      
+      // Redirecionar para a página de login
+      router.push('/login');
     } catch (error) {
       console.error("Erro no logout:", error);
-      // Fallback - redirecionar manualmente se o NextAuth falhar
+      // Fallback - redirecionar manualmente se o logout falhar
       window.location.href = "/login";
     }
   };
 
-  // Mock user data - substitute with real user data from session
+  // Dados do usuário do sistema Supabase
   const userData = {
-    userName: session?.user?.name || "Administrador",
-    userEmail: session?.user?.email || "admin@example.com",
+    userName: user?.email?.split('@')[0] || "Administrador",
+    userEmail: user?.email || "admin@example.com",
     userRole: "Administrador",
-    userInitial: session?.user?.name?.charAt(0) || "A",
+    userInitial: user?.email?.charAt(0).toUpperCase() || "A",
     userRoleColor: "bg-blue-500 text-white",
   };
 

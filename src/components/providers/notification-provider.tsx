@@ -2,9 +2,9 @@
 
 import type React from "react";
 import { createContext, useContext, useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { BellRing } from "lucide-react";
+import { useAuth } from "./auth-provider";
 
 // Tipos para notificações
 export type NotificationType = "info" | "success" | "warning" | "error";
@@ -36,17 +36,17 @@ interface NotificationContextType {
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
-  const { data: session } = useSession();
+  const { user } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [connectionInitialized, setConnectionInitialized] = useState(false);
 
   // Inicializar notificações do localStorage
   useEffect(() => {
-    if (!session?.user?.id) return;
+    if (!user?.id) return;
 
     try {
-      const saved = localStorage.getItem(`notifications-${session.user.id}`);
+      const saved = localStorage.getItem(`notifications-${user.id}`);
       if (saved) {
         const parsedNotifications = JSON.parse(saved) as Notification[];
         setNotifications(parsedNotifications);
@@ -55,22 +55,22 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     } catch (error) {
       console.error("Erro ao carregar notificações:", error);
     }
-  }, [session?.user?.id]);
+  }, [user?.id]);
 
   // Salvar notificações no localStorage quando mudam
   useEffect(() => {
-    if (!session?.user?.id || notifications.length === 0) return;
+    if (!user?.id || notifications.length === 0) return;
 
     try {
-      localStorage.setItem(`notifications-${session.user.id}`, JSON.stringify(notifications));
+      localStorage.setItem(`notifications-${user.id}`, JSON.stringify(notifications));
     } catch (error) {
       console.error("Erro ao salvar notificações:", error);
     }
-  }, [notifications, session?.user?.id]);
+  }, [notifications, user?.id]);
 
   // Simular uma conexão de tempo real
   useEffect(() => {
-    if (!session?.user?.id || connectionInitialized) return;
+    if (!user?.id || connectionInitialized) return;
 
     const interval = setInterval(() => {
       // Simulação: 10% de chance de receber uma notificação a cada 45 segundos
@@ -110,7 +110,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     setConnectionInitialized(true);
 
     return () => clearInterval(interval);
-  }, [session?.user?.id, connectionInitialized]);
+  }, [user?.id, connectionInitialized]);
 
   // Adicionar notificação
   const addNotification = (notification: Omit<Notification, "id" | "time" | "read">) => {
