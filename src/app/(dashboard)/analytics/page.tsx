@@ -134,17 +134,17 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="p-6 space-y-6 bg-slate-950 min-h-screen text-white">
+    <div className="p-6 space-y-6 bg-white min-h-screen text-slate-900">
       {/* Header */}
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Analytics</h1>
-          <p className="text-gray-400 mt-1">Análise detalhada de performance</p>
+          <p className="text-gray-600 mt-1">Análise detalhada de performance</p>
         </div>
 
         <div className="flex flex-wrap gap-3 items-center">
           <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger className="w-32 bg-slate-900 border-slate-800">
+            <SelectTrigger className="w-32 bg-white border-slate-200">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -155,12 +155,12 @@ export default function AnalyticsPage() {
             </SelectContent>
           </Select>
 
-          <Button variant="outline" className="border-slate-800 text-gray-300">
+          <Button variant="outline" className="border-slate-200 text-slate-700">
             <Filter className="w-4 h-4 mr-2" />
             Filtros
           </Button>
 
-          <Button variant="outline" className="border-slate-800 text-gray-300">
+          <Button variant="outline" className="border-slate-200 text-slate-700">
             <Download className="w-4 h-4 mr-2" />
             Exportar
           </Button>
@@ -170,12 +170,12 @@ export default function AnalyticsPage() {
       {/* KPIs Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {kpiCards.map((kpi, index) => (
-          <Card key={index} className="bg-slate-900 border-slate-800">
+          <Card key={index} className="bg-white border-slate-200 shadow-sm">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-400">{kpi.title}</p>
-                  <p className="text-2xl font-bold text-white mt-1">{kpi.value}</p>
+                  <p className="text-sm font-medium text-gray-600">{kpi.title}</p>
+                  <p className="text-2xl font-bold text-slate-900 mt-1">{kpi.value}</p>
                   <div className="flex items-center gap-1 mt-2">
                     {kpi.trend === "up" ? (
                       <TrendingUp className="w-3 h-3 text-green-500" />
@@ -187,7 +187,7 @@ export default function AnalyticsPage() {
                     }`}>
                       {kpi.change}
                     </span>
-                    <span className="text-xs text-gray-400 ml-1">vs mês anterior</span>
+                    <span className="text-xs text-gray-500 ml-1">vs mês anterior</span>
                   </div>
                 </div>
                 <div className={`p-3 rounded-lg ${kpi.bgColor}`}>
@@ -201,7 +201,7 @@ export default function AnalyticsPage() {
 
       {/* Tabs de Analytics */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid grid-cols-4 bg-slate-900 border-slate-800">
+        <TabsList className="grid grid-cols-4 bg-slate-100 border-slate-200">
           <TabsTrigger value="overview" className="data-[state=active]:bg-blue-600">
             Visão Geral
           </TabsTrigger>
@@ -220,22 +220,22 @@ export default function AnalyticsPage() {
         <TabsContent value="overview" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Gráfico de Vendas */}
-            <Card className="bg-slate-900 border-slate-800">
+            <Card className="bg-white border-slate-200 shadow-sm">
               <CardHeader>
-                <CardTitle className="text-white">Evolução de Vendas</CardTitle>
+                <CardTitle className="text-slate-900">Evolução de Vendas</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <AreaChart data={salesData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                    <XAxis dataKey="mes" stroke="#9CA3AF" />
-                    <YAxis stroke="#9CA3AF" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="mes" stroke="#64748b" />
+                    <YAxis stroke="#64748b" />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#0f172a',
-                        border: '1px solid #1e293b',
+                        backgroundColor: '#ffffff',
+                        border: '1px solid #e2e8f0',
                         borderRadius: '8px',
-                        color: '#fff'
+                        color: '#1e293b'
                       }}
                       formatter={(value) => [formatCurrency(Number(value)), 'Vendas']}
                     />
@@ -257,9 +257,9 @@ export default function AnalyticsPage() {
             </Card>
 
             {/* Origem dos Leads */}
-            <Card className="bg-slate-900 border-slate-800">
+            <Card className="bg-white border-slate-200 shadow-sm">
               <CardHeader>
-                <CardTitle className="text-white">Origem dos Leads</CardTitle>
+                <CardTitle className="text-slate-900">Origem dos Leads</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
@@ -279,10 +279,10 @@ export default function AnalyticsPage() {
                     </Pie>
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#0f172a',
-                        border: '1px solid #1e293b',
+                        backgroundColor: '#ffffff',
+                        border: '1px solid #e2e8f0',
                         borderRadius: '8px',
-                        color: '#fff'
+                        color: '#1e293b'
                       }}
                     />
                   </PieChart>
@@ -292,22 +292,22 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Funil de Conversão */}
-          <Card className="bg-slate-900 border-slate-800">
+          <Card className="bg-white border-slate-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-white">Funil de Conversão</CardTitle>
+              <CardTitle className="text-slate-900">Funil de Conversão</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={funnelData} layout="horizontal">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis type="number" stroke="#9CA3AF" />
-                  <YAxis type="category" dataKey="name" stroke="#9CA3AF" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis type="number" stroke="#64748b" />
+                  <YAxis type="category" dataKey="name" stroke="#64748b" />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#0f172a',
-                      border: '1px solid #1e293b',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #e2e8f0',
                       borderRadius: '8px',
-                      color: '#fff'
+                      color: '#1e293b'
                     }}
                   />
                   <Bar dataKey="value" fill="#3B82F6" />
@@ -321,22 +321,22 @@ export default function AnalyticsPage() {
         <TabsContent value="sales" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Performance por Produto */}
-            <Card className="bg-slate-900 border-slate-800">
+            <Card className="bg-white border-slate-200 shadow-sm">
               <CardHeader>
-                <CardTitle className="text-white">Vendas por Produto</CardTitle>
+                <CardTitle className="text-slate-900">Vendas por Produto</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={productData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                    <XAxis dataKey="produto" stroke="#9CA3AF" angle={-45} textAnchor="end" height={80} />
-                    <YAxis stroke="#9CA3AF" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="produto" stroke="#64748b" angle={-45} textAnchor="end" height={80} />
+                    <YAxis stroke="#64748b" />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#0f172a',
-                        border: '1px solid #1e293b',
+                        backgroundColor: '#ffffff',
+                        border: '1px solid #e2e8f0',
                         borderRadius: '8px',
-                        color: '#fff'
+                        color: '#1e293b'
                       }}
                       formatter={(value, name) => [
                         name === 'valor' ? formatCurrency(Number(value)) : value,
@@ -350,22 +350,22 @@ export default function AnalyticsPage() {
             </Card>
 
             {/* Taxa de Conversão Mensal */}
-            <Card className="bg-slate-900 border-slate-800">
+            <Card className="bg-white border-slate-200 shadow-sm">
               <CardHeader>
-                <CardTitle className="text-white">Taxa de Conversão</CardTitle>
+                <CardTitle className="text-slate-900">Taxa de Conversão</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={salesData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                    <XAxis dataKey="mes" stroke="#9CA3AF" />
-                    <YAxis stroke="#9CA3AF" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="mes" stroke="#64748b" />
+                    <YAxis stroke="#64748b" />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#0f172a',
-                        border: '1px solid #1e293b',
+                        backgroundColor: '#ffffff',
+                        border: '1px solid #e2e8f0',
                         borderRadius: '8px',
-                        color: '#fff'
+                        color: '#1e293b'
                       }}
                       formatter={(value) => [`${Number(value).toFixed(1)}%`, 'Conversão']}
                     />
@@ -412,22 +412,22 @@ export default function AnalyticsPage() {
         {/* Performance Tab */}
         <TabsContent value="performance" className="space-y-6">
           {/* Performance dos Vendedores */}
-          <Card className="bg-slate-900 border-slate-800">
+          <Card className="bg-white border-slate-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-white">Performance dos Vendedores</CardTitle>
+              <CardTitle className="text-slate-900">Performance dos Vendedores</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={performanceData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis dataKey="vendedor" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis dataKey="vendedor" stroke="#64748b" />
+                  <YAxis stroke="#64748b" />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#0f172a',
-                      border: '1px solid #1e293b',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #e2e8f0',
                       borderRadius: '8px',
-                      color: '#fff'
+                      color: '#1e293b'
                     }}
                     formatter={(value, name) => [
                       name === 'vendas' || name === 'meta' ? formatCurrency(Number(value)) :

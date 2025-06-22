@@ -1,6 +1,6 @@
 {
-  "name": "Móveis Planejados CRM",
-  "short_name": "CRM Móveis",
+  "name": "Planej.AI",
+  "short_name": "Planej.AI",
   "description": "Sistema de gestão para empresas de móveis planejados",
   "start_url": "/dashboard",
   "display": "standalone",

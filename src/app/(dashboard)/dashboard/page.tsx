@@ -577,24 +577,24 @@ export default function DashboardPage() {
             </Link>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 w-full">
               {vendasFechadasData.slice(0, 6).map((venda) => (
                 <div key={venda.id} className="flex flex-col p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all gap-3">
-                  <div className="flex items-start justify-between w-full">
+                  <div className="flex items-start justify-between w-full gap-3">
                     <div className="flex items-center space-x-4">
                       <Avatar>
                         <AvatarFallback className="bg-green-600 text-white">
                           {venda.cliente.split(' ').map(n => n[0]).join('')}
                         </AvatarFallback>
                       </Avatar>
-                      <div className="min-w-0 max-w-[60%]">
+                      <div className="min-w-0 flex-1">
                         <h4 className="font-medium text-slate-900 dark:text-white truncate">{venda.cliente}</h4>
                         <p className="text-sm text-slate-600 dark:text-slate-400 truncate">{venda.projeto}</p>
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex-shrink-0 min-w-[100px]">
                       <p className="font-semibold text-green-600 dark:text-green-400 whitespace-nowrap">{formatCurrency(venda.valor)}</p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 truncate max-w-[100px]">{venda.vendedor}</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{venda.vendedor}</p>
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2 mt-1">
