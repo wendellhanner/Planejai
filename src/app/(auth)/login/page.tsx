@@ -17,7 +17,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col md:flex-row items-stretch">
       {/* Left side - Background e Branding */}
-      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-blue-700 via-indigo-600 to-blue-600 text-white flex-col justify-between p-10 relative overflow-hidden">
+      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-blue-700 via-indigo-600 to-blue-600 text-white flex-col justify-between p-6 lg:p-8 relative overflow-hidden">
         {/* Elementos decorativos para efeito visual moderno */}
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           <div className="absolute top-10 left-10 w-64 h-64 rounded-full bg-white/20 filter blur-3xl"></div>
@@ -26,61 +26,61 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10">
-          <div className="mb-10 transform hover:scale-105 transition-transform duration-300">
-            <Logo size="lg" variant="light" />
+          <div className="mb-6 transform hover:scale-105 transition-transform duration-300">
+            <Logo size="lg" variant="dark" />
           </div>
-          <h1 className="text-5xl font-bold mb-6 font-display leading-tight">
+          <h1 className="text-3xl lg:text-4xl font-bold mb-4 font-display leading-tight">
             Gerencie seu negócio de móveis planejados com <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-200 to-white">inteligência</span>
           </h1>
-          <p className="text-lg opacity-90 max-w-lg leading-relaxed">
+          <p className="text-base lg:text-lg opacity-90 max-w-lg leading-relaxed">
             Uma plataforma completa para acompanhar seus clientes desde o primeiro contato até o suporte pós-venda, com automações que otimizam seu processo.
           </p>
         </div>
 
-        <div className="space-y-6 relative z-10">
-          <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/10 shadow-xl transform transition-all duration-300 hover:bg-white/15 hover:scale-[1.02] hover:shadow-blue-500/20">
-            <div className="flex items-center gap-4">
-              <div className="bg-blue-500 p-3 rounded-full shadow-inner shadow-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+        <div className="space-y-4 relative z-10">
+          <div className="bg-white/10 backdrop-blur-lg p-4 rounded-xl border border-white/10 shadow-xl transform transition-all duration-300 hover:bg-white/15 hover:scale-[1.02] hover:shadow-blue-500/20">
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-500 p-2 rounded-full shadow-inner shadow-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-lg font-display">Aumente suas vendas</h3>
-                <p className="opacity-90">Acompanhe leads e propostas, aumentando sua taxa de conversão</p>
+                <h3 className="font-semibold text-base lg:text-lg font-display">Aumente suas vendas</h3>
+                <p className="opacity-90 text-sm">Acompanhe leads e propostas, aumentando sua taxa de conversão</p>
               </div>
             </div>
           </div>
-          <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/10 shadow-xl transform transition-all duration-300 hover:bg-white/15 hover:scale-[1.02] hover:shadow-blue-500/20">
-            <div className="flex items-center gap-4">
-              <div className="bg-blue-500 p-3 rounded-full shadow-inner shadow-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+          <div className="bg-white/10 backdrop-blur-lg p-4 rounded-xl border border-white/10 shadow-xl transform transition-all duration-300 hover:bg-white/15 hover:scale-[1.02] hover:shadow-blue-500/20">
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-500 p-2 rounded-full shadow-inner shadow-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
                   <circle cx="12" cy="12" r="10"></circle>
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-lg font-display">Otimize seu tempo</h3>
-                <p className="opacity-90">Automações inteligentes para focar no que realmente importa</p>
+                <h3 className="font-semibold text-base lg:text-lg font-display">Otimize seu tempo</h3>
+                <p className="opacity-90 text-sm">Automações inteligentes para focar no que realmente importa</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="text-sm opacity-70 text-center mt-10 relative z-10">
+        <div className="text-xs opacity-70 text-center mt-4 relative z-10">
           © {new Date().getFullYear()} Planej.AI - Todos os direitos reservados.
         </div>
       </div>
 
       {/* Right side - Login form */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 p-6 md:p-10 relative overflow-hidden">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 p-4 md:p-6 relative overflow-y-auto max-h-screen">
         {/* Elementos decorativos para design moderno */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 dark:bg-blue-900/20 rounded-full filter blur-3xl opacity-70"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-50 dark:bg-indigo-900/20 rounded-full filter blur-3xl opacity-70"></div>
 
-        <div className="md:hidden mb-8 w-full max-w-md text-center">
-          <Logo size="lg" />
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+        <div className="md:hidden mb-4 w-full max-w-md text-center">
+          <Logo size="md" />
+          <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
             Sistema inteligente para gestão de móveis planejados
           </p>
         </div>

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "@/components/providers/auth-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { SupabaseProvider } from "@/contexts/supabase-provider";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -64,16 +65,18 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
 
         {/* Favicon */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </head>
       <body className={inter.className}>
         <ThemeProvider>
-          <AuthProvider>
-            {children}
-            <Toaster position="top-right" />
-          </AuthProvider>
+          <SupabaseProvider>
+            <AuthProvider>
+              {children}
+              <Toaster position="top-right" />
+            </AuthProvider>
+          </SupabaseProvider>
         </ThemeProvider>
       </body>
     </html>

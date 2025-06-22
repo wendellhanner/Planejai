@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Melhorar o desempenho da compilação
+  swcMinify: true,
+  
+  // Otimizar carregamento de páginas
+  reactStrictMode: true,
+  
+  // Configuração para imagens
   images: {
-    unoptimized: true,
     domains: [
       "source.unsplash.com",
       "images.unsplash.com",
@@ -30,6 +36,14 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
+  },
+  
+  // Configuração para remover o ícone N flutuante
+  devIndicators: false,
+  
+  // Otimizar o carregamento de módulos
+  experimental: {
+    scrollRestoration: true,
   },
 };
 

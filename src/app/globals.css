@@ -140,6 +140,24 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  
+  /* Estilo personalizado para a barra de rolagem do sidebar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.3);
+    border-radius: 20px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(148, 163, 184, 0.5);
+  }
 
   /* Classes de gradientes */
   .brand-gradient {
