@@ -21,18 +21,13 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-// Exemplos de usuários para facilitar o acesso
-const USER_EXAMPLES = [
-  { email: "admin@moveisplanejados.com", role: "ADMIN", color: "bg-blue-500" },
-  { email: "vendedor@moveisplanejados.com", role: "VENDEDOR", color: "bg-green-500" },
-  { email: "producao@moveisplanejados.com", role: "PRODUCAO", color: "bg-amber-500" },
-];
+// Removidos exemplos de usuários
 
 export function LoginForm() {
   const router = useRouter();
   const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [showCredentials, setShowCredentials] = useState(false);
+  // Estado de loading para o botão de login
 
   // Verificar se há informações salvas no localStorage
   useEffect(() => {
@@ -95,19 +90,7 @@ export function LoginForm() {
     }
   }
 
-  // Função para preencher o email de exemplo
-  const fillExampleEmail = (credIndex: number) => {
-    if (credIndex >= 0 && credIndex < USER_EXAMPLES.length) {
-      const example = USER_EXAMPLES[credIndex];
-      
-      // Preencher apenas o email no formulário
-      form.setValue("email", example.email);
-      
-      toast.info(`Email preenchido: ${example.email}. Insira a senha para continuar.`, {
-        position: "top-center",
-      });
-    }
-  };
+  // Função removida de preenchimento de email de exemplo
 
   const [showPassword, setShowPassword] = useState(false);
   const [formFocus, setFormFocus] = useState<string | null>(null);
@@ -225,102 +208,7 @@ export function LoginForm() {
           )}
         </Button>
 
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-slate-200 dark:border-slate-700" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white dark:bg-slate-800 px-2 text-slate-500 dark:text-slate-400">
-              Exemplos de usuários
-            </span>
-          </div>
-        </div>
-
-        {showCredentials && (
-          <div className="mt-6 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-2 mb-2">
-              <Info className="h-4 w-4 text-blue-500" />
-              <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">Exemplos de Usuários</h3>
-            </div>
-            <div className="space-y-2">
-              {USER_EXAMPLES.map((user, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-2 rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer"
-                  onClick={() => fillExampleEmail(index)}
-                >
-                  <div className="flex items-center gap-2">
-                    <div className={`h-6 w-6 rounded-full flex items-center justify-center ${user.color} text-white`}>
-                      <User className="h-3 w-3" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium text-slate-700 dark:text-slate-300">{user.role}</p>
-                      <p className="text-xs text-slate-500">{user.email}</p>
-                    </div>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="h-7 text-xs gap-1"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      fillExampleEmail(index);
-                    }}
-                  >
-                    <Mail className="h-3 w-3 mr-1" />
-                    Usar
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          className="text-xs w-full text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 h-8 mt-1"
-          onClick={() => setShowCredentials(!showCredentials)}
-        >
-          <Info className="h-3 w-3 mr-1" />
-          {showCredentials ? "Ocultar credenciais" : "Mostrar credenciais de teste"}
-        </Button>
-
-        {showCredentials && (
-          <div className="rounded-md bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-2 border border-blue-100 dark:border-blue-800 shadow-sm animate-fadeIn text-xs">
-            <div className="flex items-start gap-1.5">
-              <Info className="h-3.5 w-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-blue-800 mb-1">Credenciais para teste:</p>
-                <div className="space-y-1">
-                  {TEST_CREDENTIALS.map((cred, i) => (
-                    <div key={i} className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
-                      <span className={`font-bold ${cred.color.replace('bg-', 'text-')}`}>{cred.role}:</span>
-                      <span className="text-slate-600">{cred.email}</span>
-                      <span className="text-slate-400">/</span>
-                      <span className="text-slate-600">{cred.password}</span>
-                      <button
-                        type="button"
-                        className="text-blue-500 hover:text-blue-700 transition-colors"
-                        onClick={() => {
-                          navigator.clipboard.writeText(`${cred.email} / ${cred.password}`);
-                          toast.success("Credenciais copiadas!", { position: "top-center", duration: 2000 });
-                        }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-                          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-                        </svg>
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Seção de exemplos de usuários removida */}
       </form>
     </Form>
   );
