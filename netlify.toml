@@ -2,11 +2,17 @@
   remote_images = ["https://source.unsplash.com/.*", "https://images.unsplash.com/.*", "https://ext.same-assets.com/.*", "https://ugc.same-assets.com/.*"]
 
 [build]
-  command = "npm run build"
+  command = "bash ./netlify-build.sh"
   publish = ".next"
 
+# Configurações de ambiente para o build
 [build.environment]
+  NODE_ENV = "production"
+  NETLIFY_USE_YARN_CACHE = "false"
+  NETLIFY_USE_NPM_CACHE = "false"
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  # URL de banco de dados dummy para o Prisma durante o build
+  DATABASE_URL = "postgresql://dummy:dummy@localhost:5432/dummy"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
