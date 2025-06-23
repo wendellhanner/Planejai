@@ -134,48 +134,52 @@ export function DashboardVendasFechadas() {
         ) : (
           <div>
             {/* Métricas de vendas */}
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="space-y-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div className="space-y-1 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg">
                 <div className="text-sm text-slate-500 dark:text-slate-400 flex items-center">
-                  <DollarSign className="h-4 w-4 mr-1 text-emerald-500" />
-                  Total de Vendas
+                  <DollarSign className="h-4 w-4 mr-1 text-emerald-500 flex-shrink-0" />
+                  <span className="truncate">Total de Vendas</span>
                 </div>
-                <div className="text-xl font-semibold">{formatCurrency(metricas.total)}</div>
-                <div className="flex items-center text-xs">
-                  {metricas.variacao > 0 ? (
-                    <>
-                      <ArrowUpRight className="h-3 w-3 text-emerald-500 mr-0.5" />
-                      <span className="text-emerald-500">+{metricas.variacao}%</span>
-                    </>
-                  ) : (
-                    <>
-                      <ArrowDownRight className="h-3 w-3 text-red-500 mr-0.5" />
-                      <span className="text-red-500">{metricas.variacao}%</span>
-                    </>
-                  )}
-                  <span className="text-slate-400 dark:text-slate-500 ml-1">vs. mês anterior</span>
+                <div className="text-xl font-semibold truncate">{formatCurrency(metricas.total)}</div>
+                <div className="flex items-center text-xs flex-wrap">
+                  <div className="flex items-center">
+                    {metricas.variacao > 0 ? (
+                      <>
+                        <ArrowUpRight className="h-3 w-3 text-emerald-500 mr-0.5 flex-shrink-0" />
+                        <span className="text-emerald-500">+{metricas.variacao}%</span>
+                      </>
+                    ) : (
+                      <>
+                        <ArrowDownRight className="h-3 w-3 text-red-500 mr-0.5 flex-shrink-0" />
+                        <span className="text-red-500">{metricas.variacao}%</span>
+                      </>
+                    )}
+                  </div>
+                  <span className="text-slate-400 dark:text-slate-500 ml-1 truncate">vs. mês anterior</span>
                 </div>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg">
                 <div className="text-sm text-slate-500 dark:text-slate-400 flex items-center">
-                  <TrendingUp className="h-4 w-4 mr-1 text-blue-500" />
-                  Ticket Médio
+                  <TrendingUp className="h-4 w-4 mr-1 text-blue-500 flex-shrink-0" />
+                  <span className="truncate">Ticket Médio</span>
                 </div>
-                <div className="text-xl font-semibold">{formatCurrency(metricas.ticketMedio)}</div>
-                <div className="flex items-center text-xs">
-                  {metricas.variacaoTicket > 0 ? (
-                    <>
-                      <ArrowUpRight className="h-3 w-3 text-emerald-500 mr-0.5" />
-                      <span className="text-emerald-500">+{metricas.variacaoTicket}%</span>
-                    </>
-                  ) : (
-                    <>
-                      <ArrowDownRight className="h-3 w-3 text-red-500 mr-0.5" />
-                      <span className="text-red-500">{metricas.variacaoTicket}%</span>
-                    </>
-                  )}
-                  <span className="text-slate-400 dark:text-slate-500 ml-1">vs. mês anterior</span>
+                <div className="text-xl font-semibold truncate">{formatCurrency(metricas.ticketMedio)}</div>
+                <div className="flex items-center text-xs flex-wrap">
+                  <div className="flex items-center">
+                    {metricas.variacaoTicket > 0 ? (
+                      <>
+                        <ArrowUpRight className="h-3 w-3 text-emerald-500 mr-0.5 flex-shrink-0" />
+                        <span className="text-emerald-500">+{metricas.variacaoTicket}%</span>
+                      </>
+                    ) : (
+                      <>
+                        <ArrowDownRight className="h-3 w-3 text-red-500 mr-0.5 flex-shrink-0" />
+                        <span className="text-red-500">{metricas.variacaoTicket}%</span>
+                      </>
+                    )}
+                  </div>
+                  <span className="text-slate-400 dark:text-slate-500 ml-1 truncate">vs. mês anterior</span>
                 </div>
               </div>
             </div>
@@ -207,12 +211,12 @@ export function DashboardVendasFechadas() {
               </div>
               <div className="space-y-2">
                 {vendasRecentes.map((venda) => (
-                  <div key={venda.id} className="flex justify-between items-center p-1.5 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-md">
-                    <div className="flex-1">
-                      <div className="text-sm font-medium">{venda.cliente}</div>
-                      <div className="text-xs text-slate-500">{venda.projeto}</div>
+                  <div key={venda.id} className="flex flex-wrap justify-between items-center p-2 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-md border border-slate-100 dark:border-slate-800">
+                    <div className="flex-1 min-w-[140px] pr-2 overflow-hidden">
+                      <div className="text-sm font-medium truncate">{venda.cliente}</div>
+                      <div className="text-xs text-slate-500 truncate">{venda.projeto}</div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right shrink-0">
                       <div className="text-sm font-semibold">{formatCurrency(venda.valor)}</div>
                       <div className="text-xs text-slate-500">{venda.dataFechamento}</div>
                     </div>
@@ -223,12 +227,12 @@ export function DashboardVendasFechadas() {
 
             {/* Previsão para o próximo mês */}
             <div className="mt-4 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-md">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-1.5">
-                  <TrendingUp className="h-4 w-4 text-blue-500" />
-                  <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Previsão para o próximo mês</span>
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <div className="flex items-center gap-1.5 min-w-[180px]">
+                  <TrendingUp className="h-4 w-4 text-blue-500 flex-shrink-0" />
+                  <span className="text-sm font-medium text-blue-700 dark:text-blue-300 truncate">Previsão para o próximo mês</span>
                 </div>
-                <div className="text-sm font-semibold text-blue-700 dark:text-blue-300">
+                <div className="text-sm font-semibold text-blue-700 dark:text-blue-300 shrink-0">
                   {formatCurrency(metricas.previsaoProximoMes)}
                 </div>
               </div>

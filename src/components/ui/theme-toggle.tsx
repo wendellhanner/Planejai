@@ -48,10 +48,12 @@ export function ThemeToggle({ className }: { className?: string }) {
           <Moon className="mr-2 h-4 w-4" />
           <span>Escuro</span>
         </DropdownMenuItem>
+        {/*
         <DropdownMenuItem onClick={() => setTheme("system")}>
           <span className="mr-2">💻</span>
           <span>Sistema</span>
         </DropdownMenuItem>
+        */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

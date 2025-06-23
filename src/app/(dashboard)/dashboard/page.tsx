@@ -580,25 +580,25 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 w-full">
               {vendasFechadasData.slice(0, 6).map((venda) => (
                 <div key={venda.id} className="flex flex-col p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all gap-3">
-                  <div className="flex items-start justify-between w-full gap-3">
-                    <div className="flex items-center space-x-4">
-                      <Avatar>
-                        <AvatarFallback className="bg-green-600 text-white">
+                  <div className="flex flex-wrap items-start w-full gap-3">
+                    <div className="flex items-center space-x-3 flex-grow min-w-0">
+                      <Avatar className="flex-shrink-0 w-8 h-8">
+                        <AvatarFallback className="bg-green-600 text-white text-xs">
                           {venda.cliente.split(' ').map(n => n[0]).join('')}
                         </AvatarFallback>
                       </Avatar>
-                      <div className="min-w-0 flex-1">
+                      <div className="min-w-0 flex-1 overflow-hidden">
                         <h4 className="font-medium text-slate-900 dark:text-white truncate">{venda.cliente}</h4>
                         <p className="text-sm text-slate-600 dark:text-slate-400 truncate">{venda.projeto}</p>
                       </div>
                     </div>
-                    <div className="text-right flex-shrink-0 min-w-[100px]">
-                      <p className="font-semibold text-green-600 dark:text-green-400 whitespace-nowrap">{formatCurrency(venda.valor)}</p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">{venda.vendedor}</p>
+                    <div className="text-right flex-shrink-0 w-full sm:w-auto">
+                      <p className="font-semibold text-green-600 dark:text-green-400">{formatCurrency(venda.valor)}</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 truncate">{venda.vendedor}</p>
                     </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 mt-1">
-                    <Badge className={`text-xs whitespace-nowrap ${
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <Badge className={`text-xs py-1 px-2 ${
                       venda.status === 'Entregue' ? 'bg-green-600 text-white hover:bg-green-700' :
                       venda.status === 'Em produção' ? 'bg-blue-600 text-white hover:bg-blue-700' :
                       venda.status === 'Concluído' ? 'bg-green-600 text-white hover:bg-green-700' :
@@ -606,8 +606,10 @@ export default function DashboardPage() {
                     }`}>
                       {venda.status}
                     </Badge>
-                    <span className="text-xs text-slate-500">•</span>
-                    <span className="text-xs text-slate-500">{venda.dataFechamento}</span>
+                    <div className="flex items-center">
+                      <span className="text-xs text-slate-500 mx-1">•</span>
+                      <span className="text-xs text-slate-500">{venda.dataFechamento}</span>
+                    </div>
                   </div>
                 </div>
               ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, SessionProvider } from "next-auth/react";
 import { toast } from "sonner";
 import { useNotifications } from "@/components/providers/notification-provider";
 
@@ -13,7 +13,7 @@ import { GroupDetails } from "@/components/chat/group-details";
 
 import * as ChatIntegration from "@/lib/chat-integration";
 
-export default function ChatInternoPage() {
+function ChatInternoContent() {
   const { data: session } = useSession();
   const { addNotification } = useNotifications();
   const [isLoading, setIsLoading] = useState(true);
@@ -351,7 +351,8 @@ export default function ChatInternoPage() {
   }, []);
 
   // Obter o chat ativo
-  const activeChat = chatThreads.find(thread => thread.id === activeChatId);
+  // Usar null como fallback em vez de undefined
+  const activeChat = chatThreads.find(thread => thread.id === activeChatId) || null;
 
   // Função para lidar com a seleção de chat
   const handleSelectChat = (chatId: string) => {
@@ -446,10 +447,13 @@ export default function ChatInternoPage() {
     if (sendToWhatsApp && currentChat?.client && currentChat.sources?.includes("whatsapp")) {
       const clientWhatsAppNumber = whatsAppNumbers[currentChat.client.id];
       if (clientWhatsAppNumber) {
-        const syncResult = await ChatIntegration.syncInternalToWhatsApp(clientWhatsAppNumber, {
+        // Converter o status para um tipo compatível antes de enviar
+        const whatsAppMessage = {
           ...newMessage,
           source: "whatsapp", // Marcar como originada para WhatsApp
-        });
+          status: newMessage.status as "sent" | "delivered" | "read" | "failed" // Garantir tipo compatível
+        };
+        const syncResult = await ChatIntegration.syncInternalToWhatsApp(clientWhatsAppNumber, whatsAppMessage);
         if (syncResult.success) {
           toast.success("Mensagem enviada também para o WhatsApp do cliente.");
         } else {
@@ -929,7 +933,7 @@ export default function ChatInternoPage() {
           </p>
         </div>
       </div>
-
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-160px)]">
         {/* Lista de Conversas */}
         <div className="lg:col-span-1 h-full">
@@ -1025,5 +1029,13 @@ export default function ChatInternoPage() {
         />
       )}
     </div>
+  );
+}
+
+export default function ChatInternoPage() {
+  return (
+    <SessionProvider>
+      <ChatInternoContent />
+    </SessionProvider>
   );
 }

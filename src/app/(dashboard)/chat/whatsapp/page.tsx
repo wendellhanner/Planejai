@@ -3,6 +3,7 @@
 import { Suspense, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Loader2 } from "lucide-react";
+import { SessionProvider } from "next-auth/react";
 
 // Dynamically import the WhatsAppStyleChat component with no SSR
 const WhatsAppStyleChat = dynamic(
@@ -47,7 +48,11 @@ export default function WhatsAppChatPage() {
           </div>
         }
       >
-        {isLoaded && <WhatsAppStyleChat />}
+        {isLoaded && (
+          <SessionProvider>
+            <WhatsAppStyleChat />
+          </SessionProvider>
+        )}
       </Suspense>
     </div>
   );

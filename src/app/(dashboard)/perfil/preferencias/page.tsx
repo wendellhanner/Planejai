@@ -1,10 +1,22 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
@@ -25,7 +37,7 @@ import {
   Zap,
   Shield,
   Database,
-  Save
+  Save,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -59,7 +71,7 @@ export default function PreferenciasPage() {
     // Privacidade
     profileVisibility: "team",
     activityTracking: true,
-    analyticsConsent: true
+    analyticsConsent: true,
   });
 
   const handleSave = () => {
@@ -68,7 +80,7 @@ export default function PreferenciasPage() {
   };
 
   const updatePreference = (key: string, value: any) => {
-    setPreferences(prev => ({ ...prev, [key]: value }));
+    setPreferences((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
@@ -76,7 +88,9 @@ export default function PreferenciasPage() {
       {/* Header da página */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Preferências</h1>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+            Preferências
+          </h1>
           <p className="text-slate-600 dark:text-slate-400 mt-1">
             Personalize sua experiência na plataforma
           </p>
@@ -117,14 +131,20 @@ export default function PreferenciasPage() {
                     <div className="flex items-center gap-3">
                       <Mail className="h-4 w-4 text-slate-600" />
                       <div>
-                        <Label htmlFor="email-notifications">Notificações por Email</Label>
-                        <p className="text-sm text-slate-500">Receba atualizações no seu email</p>
+                        <Label htmlFor="email-notifications">
+                          Notificações por Email
+                        </Label>
+                        <p className="text-sm text-slate-500">
+                          Receba atualizações no seu email
+                        </p>
                       </div>
                     </div>
                     <Switch
                       id="email-notifications"
                       checked={preferences.emailNotifications}
-                      onCheckedChange={(checked) => updatePreference('emailNotifications', checked)}
+                      onCheckedChange={(checked) =>
+                        updatePreference("emailNotifications", checked)
+                      }
                     />
                   </div>
 
@@ -132,14 +152,20 @@ export default function PreferenciasPage() {
                     <div className="flex items-center gap-3">
                       <Bell className="h-4 w-4 text-slate-600" />
                       <div>
-                        <Label htmlFor="push-notifications">Notificações Push</Label>
-                        <p className="text-sm text-slate-500">Notificações no navegador</p>
+                        <Label htmlFor="push-notifications">
+                          Notificações Push
+                        </Label>
+                        <p className="text-sm text-slate-500">
+                          Notificações no navegador
+                        </p>
                       </div>
                     </div>
                     <Switch
                       id="push-notifications"
                       checked={preferences.pushNotifications}
-                      onCheckedChange={(checked) => updatePreference('pushNotifications', checked)}
+                      onCheckedChange={(checked) =>
+                        updatePreference("pushNotifications", checked)
+                      }
                     />
                   </div>
 
@@ -147,14 +173,20 @@ export default function PreferenciasPage() {
                     <div className="flex items-center gap-3">
                       <MessageSquare className="h-4 w-4 text-slate-600" />
                       <div>
-                        <Label htmlFor="sms-notifications">Notificações por SMS</Label>
-                        <p className="text-sm text-slate-500">SMS para casos urgentes</p>
+                        <Label htmlFor="sms-notifications">
+                          Notificações por SMS
+                        </Label>
+                        <p className="text-sm text-slate-500">
+                          SMS para casos urgentes
+                        </p>
                       </div>
                     </div>
                     <Switch
                       id="sms-notifications"
                       checked={preferences.smsNotifications}
-                      onCheckedChange={(checked) => updatePreference('smsNotifications', checked)}
+                      onCheckedChange={(checked) =>
+                        updatePreference("smsNotifications", checked)
+                      }
                     />
                   </div>
                 </div>
@@ -171,16 +203,22 @@ export default function PreferenciasPage() {
                     <Switch
                       id="new-lead"
                       checked={preferences.newLeadNotification}
-                      onCheckedChange={(checked) => updatePreference('newLeadNotification', checked)}
+                      onCheckedChange={(checked) =>
+                        updatePreference("newLeadNotification", checked)
+                      }
                     />
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="project-update">Atualizações de Projetos</Label>
+                    <Label htmlFor="project-update">
+                      Atualizações de Projetos
+                    </Label>
                     <Switch
                       id="project-update"
                       checked={preferences.projectUpdateNotification}
-                      onCheckedChange={(checked) => updatePreference('projectUpdateNotification', checked)}
+                      onCheckedChange={(checked) =>
+                        updatePreference("projectUpdateNotification", checked)
+                      }
                     />
                   </div>
 
@@ -189,7 +227,9 @@ export default function PreferenciasPage() {
                     <Switch
                       id="payment"
                       checked={preferences.paymentNotification}
-                      onCheckedChange={(checked) => updatePreference('paymentNotification', checked)}
+                      onCheckedChange={(checked) =>
+                        updatePreference("paymentNotification", checked)
+                      }
                     />
                   </div>
                 </div>
@@ -223,10 +263,12 @@ export default function PreferenciasPage() {
                       <Moon className="h-4 w-4" />
                       <span className="text-sm">Escuro</span>
                     </div>
+                    {/*
                     <div className="flex items-center gap-2">
                       <Monitor className="h-4 w-4" />
                       <span className="text-sm">Sistema</span>
                     </div>
+                    */}
                     <ThemeToggle />
                   </div>
                 </div>
@@ -238,7 +280,9 @@ export default function PreferenciasPage() {
                   <div className="space-y-2">
                     <Slider
                       value={[preferences.fontSize]}
-                      onValueChange={(value) => updatePreference('fontSize', value[0])}
+                      onValueChange={(value) =>
+                        updatePreference("fontSize", value[0])
+                      }
                       max={18}
                       min={12}
                       step={1}
@@ -258,24 +302,32 @@ export default function PreferenciasPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <Label htmlFor="compact-mode">Modo Compacto</Label>
-                      <p className="text-sm text-slate-500">Reduz o espaçamento entre elementos</p>
+                      <p className="text-sm text-slate-500">
+                        Reduz o espaçamento entre elementos
+                      </p>
                     </div>
                     <Switch
                       id="compact-mode"
                       checked={preferences.compactMode}
-                      onCheckedChange={(checked) => updatePreference('compactMode', checked)}
+                      onCheckedChange={(checked) =>
+                        updatePreference("compactMode", checked)
+                      }
                     />
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div>
                       <Label htmlFor="animations">Animações</Label>
-                      <p className="text-sm text-slate-500">Ativa animações na interface</p>
+                      <p className="text-sm text-slate-500">
+                        Ativa animações na interface
+                      </p>
                     </div>
                     <Switch
                       id="animations"
                       checked={preferences.animationsEnabled}
-                      onCheckedChange={(checked) => updatePreference('animationsEnabled', checked)}
+                      onCheckedChange={(checked) =>
+                        updatePreference("animationsEnabled", checked)
+                      }
                     />
                   </div>
                 </div>
@@ -297,7 +349,12 @@ export default function PreferenciasPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="language">Idioma</Label>
-                  <Select value={preferences.language} onValueChange={(value) => updatePreference('language', value)}>
+                  <Select
+                    value={preferences.language}
+                    onValueChange={(value) =>
+                      updatePreference("language", value)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -311,21 +368,37 @@ export default function PreferenciasPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="timezone">Fuso Horário</Label>
-                  <Select value={preferences.timezone} onValueChange={(value) => updatePreference('timezone', value)}>
+                  <Select
+                    value={preferences.timezone}
+                    onValueChange={(value) =>
+                      updatePreference("timezone", value)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="America/Sao_Paulo">São Paulo (UTC-3)</SelectItem>
-                      <SelectItem value="America/New_York">New York (UTC-5)</SelectItem>
-                      <SelectItem value="Europe/London">London (UTC+0)</SelectItem>
+                      <SelectItem value="America/Sao_Paulo">
+                        São Paulo (UTC-3)
+                      </SelectItem>
+                      <SelectItem value="America/New_York">
+                        New York (UTC-5)
+                      </SelectItem>
+                      <SelectItem value="Europe/London">
+                        London (UTC+0)
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="date-format">Formato de Data</Label>
-                  <Select value={preferences.dateFormat} onValueChange={(value) => updatePreference('dateFormat', value)}>
+                  <Select
+                    value={preferences.dateFormat}
+                    onValueChange={(value) =>
+                      updatePreference("dateFormat", value)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -339,7 +412,12 @@ export default function PreferenciasPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="currency">Moeda</Label>
-                  <Select value={preferences.currency} onValueChange={(value) => updatePreference('currency', value)}>
+                  <Select
+                    value={preferences.currency}
+                    onValueChange={(value) =>
+                      updatePreference("currency", value)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -369,24 +447,34 @@ export default function PreferenciasPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <Label htmlFor="auto-save">Salvamento Automático</Label>
-                    <p className="text-sm text-slate-500">Salva automaticamente suas alterações</p>
+                    <p className="text-sm text-slate-500">
+                      Salva automaticamente suas alterações
+                    </p>
                   </div>
                   <Switch
                     id="auto-save"
                     checked={preferences.autoSave}
-                    onCheckedChange={(checked) => updatePreference('autoSave', checked)}
+                    onCheckedChange={(checked) =>
+                      updatePreference("autoSave", checked)
+                    }
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="background-sync">Sincronização em Segundo Plano</Label>
-                    <p className="text-sm text-slate-500">Mantém dados atualizados automaticamente</p>
+                    <Label htmlFor="background-sync">
+                      Sincronização em Segundo Plano
+                    </Label>
+                    <p className="text-sm text-slate-500">
+                      Mantém dados atualizados automaticamente
+                    </p>
                   </div>
                   <Switch
                     id="background-sync"
                     checked={preferences.backgroundSync}
-                    onCheckedChange={(checked) => updatePreference('backgroundSync', checked)}
+                    onCheckedChange={(checked) =>
+                      updatePreference("backgroundSync", checked)
+                    }
                   />
                 </div>
               </div>
@@ -406,8 +494,15 @@ export default function PreferenciasPage() {
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="profile-visibility">Visibilidade do Perfil</Label>
-                  <Select value={preferences.profileVisibility} onValueChange={(value) => updatePreference('profileVisibility', value)}>
+                  <Label htmlFor="profile-visibility">
+                    Visibilidade do Perfil
+                  </Label>
+                  <Select
+                    value={preferences.profileVisibility}
+                    onValueChange={(value) =>
+                      updatePreference("profileVisibility", value)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -423,25 +518,37 @@ export default function PreferenciasPage() {
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="activity-tracking">Rastreamento de Atividade</Label>
-                    <p className="text-sm text-slate-500">Permite tracking para melhorar a experiência</p>
+                    <Label htmlFor="activity-tracking">
+                      Rastreamento de Atividade
+                    </Label>
+                    <p className="text-sm text-slate-500">
+                      Permite tracking para melhorar a experiência
+                    </p>
                   </div>
                   <Switch
                     id="activity-tracking"
                     checked={preferences.activityTracking}
-                    onCheckedChange={(checked) => updatePreference('activityTracking', checked)}
+                    onCheckedChange={(checked) =>
+                      updatePreference("activityTracking", checked)
+                    }
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="analytics-consent">Consentimento para Analytics</Label>
-                    <p className="text-sm text-slate-500">Permite coleta de dados anônimos</p>
+                    <Label htmlFor="analytics-consent">
+                      Consentimento para Analytics
+                    </Label>
+                    <p className="text-sm text-slate-500">
+                      Permite coleta de dados anônimos
+                    </p>
                   </div>
                   <Switch
                     id="analytics-consent"
                     checked={preferences.analyticsConsent}
-                    onCheckedChange={(checked) => updatePreference('analyticsConsent', checked)}
+                    onCheckedChange={(checked) =>
+                      updatePreference("analyticsConsent", checked)
+                    }
                   />
                 </div>
               </div>
