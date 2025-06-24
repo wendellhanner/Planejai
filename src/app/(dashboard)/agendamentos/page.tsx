@@ -269,7 +269,7 @@ export default function AgendamentosPage() {
                     {typeInfo.label}
                   </div>
                 </CardContent>
-                <CardFooter className="p-3 pt-0 flex gap-2 justify-between bg-slate-50 border-t flex-wrap">
+                <CardFooter className="p-3 pt-0 flex gap-2 justify-between bg-slate-50 dark:bg-slate-800 border-t dark:border-slate-700 flex-wrap">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -311,8 +311,8 @@ export default function AgendamentosPage() {
           })}
         </div>
       ) : (
-        <Card className="border border-slate-200">
-          <CardHeader className="bg-slate-50 border-b border-slate-200 p-4">
+        <Card className="border border-slate-200 dark:border-slate-700">
+          <CardHeader className="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-4">
             <div className="flex justify-between items-center">
               <Button variant="outline" size="sm" onClick={() => setCurrentDay(new Date())}>
                 Hoje
@@ -356,7 +356,7 @@ export default function AgendamentosPage() {
                         return (
                           <div
                             key={apt.id}
-                            className={`p-2 rounded-md border-l-4 border-l-blue-500 hover:bg-slate-50 cursor-pointer`}
+                            className={`p-2 rounded-md border-l-4 border-l-blue-500 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer`}
                             onClick={() => handleShowDetails(apt.id)}
                           >
                             <div className="flex justify-between">

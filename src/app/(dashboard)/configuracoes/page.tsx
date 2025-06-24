@@ -120,13 +120,6 @@ export default function ConfiguracoesPage() {
         category: "sistema",
       },
       {
-        title: "Aparência e Tema",
-        description: "Personalize as cores, logotipo e aparência do sistema.",
-        icon: <Paintbrush className="h-5 w-5" />,
-        href: "/configuracoes/aparencia",
-        category: "sistema",
-      },
-      {
         title: "Acessibilidade",
         description:
           "Ajuste as configurações de acessibilidade para melhorar sua experiência.",
