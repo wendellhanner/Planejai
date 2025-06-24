@@ -582,7 +582,7 @@ export default function KanbanPage() {
       case "Concluído":
         return <div className="w-2 h-2 bg-green-500 rounded-full" />;
       default:
-        return <div className="w-2 h-2 bg-gray-500 rounded-full" />;
+        return <div className="w-2 h-2 bg-muted-foreground rounded-full" />;
     }
   };
 
@@ -662,27 +662,27 @@ export default function KanbanPage() {
   };
 
   return (
-    <div className="p-6 bg-slate-950 min-h-screen">
+    <div className="p-6 bg-background min-h-screen">
       {/* Clean Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white mb-2">Kanban</h1>
-        <p className="text-slate-400 text-sm">Gestão visual de projetos e clientes</p>
+        <h1 className="text-2xl font-bold text-foreground mb-2">Kanban</h1>
+        <p className="text-muted-foreground text-sm">Gestão visual de projetos e clientes</p>
       </div>
 
       {/* Clean Controls */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-4">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="bg-slate-800 border-slate-700">
+            <TabsList className="bg-muted border-border">
               <TabsTrigger
                 value="comercial"
-                className="data-[state=active]:bg-slate-700 text-white text-sm"
+                className="data-[state=active]:bg-slate-700 text-foreground text-sm"
               >
                 Comercial
               </TabsTrigger>
               <TabsTrigger
                 value="projetos"
-                className="data-[state=active]:bg-blue-600 text-slate-400 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-blue-600 text-muted-foreground data-[state=active]:text-white text-sm"
               >
                 Projetos
               </TabsTrigger>
@@ -696,11 +696,11 @@ export default function KanbanPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
             <Input
               placeholder={activeTab === "projetos" ? "Buscar projetos..." : "Buscar clientes..."}
-              className="pl-10 bg-slate-800 border-slate-700 text-white placeholder-slate-400 w-full sm:w-64 text-sm"
+              className="pl-10 bg-input border-border text-foreground placeholder-muted-foreground w-full sm:w-64 text-sm"
             />
           </div>
           <div className="flex gap-2 w-full sm:w-auto">
-            <Button variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 flex-1 sm:flex-none text-sm">
+            <Button variant="outline" className="border-border text-muted-foreground hover:bg-accent flex-1 sm:flex-none text-sm">
               <Filter className="h-4 w-4 mr-2" />
               Filtrar
             </Button>
@@ -722,18 +722,18 @@ export default function KanbanPage() {
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <div className={`w-3 h-3 rounded-full bg-${column.color}-500`}></div>
-                    <h3 className="font-semibold text-white text-sm">{column.title}</h3>
+                    <h3 className="font-semibold text-foreground text-sm">{column.title}</h3>
                   </div>
-                  <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white p-0 h-auto">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground p-0 h-auto">
                     <MoreHorizontal className="h-3 w-3" />
                   </Button>
                 </div>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-400">
+                  <span className="text-muted-foreground">
                     {column.items.length} {activeTab === "projetos" ? "projetos" : "itens"}
                   </span>
                   {column.limit > 0 && (
-                    <span className="text-slate-500">
+                    <span className="text-muted-foreground/70">
                       Limite: {column.limit}
                     </span>
                   )}
@@ -747,7 +747,7 @@ export default function KanbanPage() {
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                     className={`space-y-3 min-h-[200px] flex-1 ${
-                      snapshot.isDraggingOver ? 'bg-slate-800/50 rounded-lg p-2' : ''
+                      snapshot.isDraggingOver ? 'bg-accent/50 rounded-lg p-2' : ''
                     }`}
                   >
                     {column.items.map((item, index) => (
@@ -756,7 +756,7 @@ export default function KanbanPage() {
                           <Card
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className={`bg-slate-800 border-slate-700 hover:border-slate-600 transition-all cursor-pointer group ${
+                            className={`bg-card border-border hover:border-input transition-all cursor-pointer group ${
                               snapshot.isDragging ? 'shadow-lg rotate-1 scale-105' : ''
                             }`}
                             onClick={() => openCardDetails(item)}
@@ -766,32 +766,32 @@ export default function KanbanPage() {
                               <div className="flex items-start justify-between mb-3">
                                 <div className="flex items-center gap-2">
                                   <div {...provided.dragHandleProps}>
-                                    <GripVertical className="h-3 w-3 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <GripVertical className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                                   </div>
                                   {activeTab === "projetos" && getStatusIcon(item.status)}
                                   {(item.starred || item.prioridade === "Alta") && (
                                     <Star className="h-3 w-3 text-yellow-500 fill-current" />
                                   )}
                                 </div>
-                                <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white p-0 h-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground p-0 h-auto opacity-0 group-hover:opacity-100 transition-opacity">
                                   <MoreHorizontal className="h-3 w-3" />
                                 </Button>
                               </div>
 
                               {/* Clean Title and Description */}
                               <div className="mb-3">
-                                <h4 className="font-semibold text-white text-sm mb-1 line-clamp-1">
+                                <h4 className="font-semibold text-foreground text-sm mb-1 line-clamp-1">
                                   {activeTab === "projetos" ? item.titulo : item.title}
                                 </h4>
-                                <p className="text-xs text-slate-400 line-clamp-1">
+                                <p className="text-xs text-muted-foreground line-clamp-1">
                                   {activeTab === "projetos" ? item.cliente : item.description}
                                 </p>
                                 {activeTab === "projetos" && (
                                   <>
-                                    <p className="text-xs text-slate-500 mt-1 line-clamp-1">
+                                    <p className="text-xs text-muted-foreground/70 mt-1 line-clamp-1">
                                       {item.categoria}
                                     </p>
-                                    <p className="text-xs text-slate-500 line-clamp-1">
+                                    <p className="text-xs text-muted-foreground/70 line-clamp-1">
                                       {item.endereco}
                                     </p>
                                   </>
@@ -802,13 +802,13 @@ export default function KanbanPage() {
                               {activeTab === "projetos" && (
                                 <div className="mb-3">
                                   <div className="flex items-center justify-between mb-1">
-                                    <span className="text-xs text-slate-400">Progresso</span>
-                                    <span className="text-xs text-white">{item.progresso}%</span>
+                                    <span className="text-xs text-muted-foreground">Progresso</span>
+                                    <span className="text-xs text-foreground">{item.progresso}%</span>
                                   </div>
                                   <Progress value={item.progresso} className="h-1" />
                                   <div className="flex items-center justify-between mt-1 text-xs">
-                                    <span className="text-slate-500">Início: {item.dataInicio}</span>
-                                    <span className="text-slate-500">Entrega: {item.prazoEntrega}</span>
+                                    <span className="text-muted-foreground/70">Início: {item.dataInicio}</span>
+                                    <span className="text-muted-foreground/70">Entrega: {item.prazoEntrega}</span>
                                   </div>
                                 </div>
                               )}
@@ -860,7 +860,7 @@ export default function KanbanPage() {
                                     })}
                                     {(item.equipe || item.team)?.length > 2 && (
                                       <div className="h-5 w-5 rounded-full bg-slate-600 border border-slate-500 flex items-center justify-center">
-                                        <span className="text-xs text-white">+{(item.equipe || item.team).length - 2}</span>
+                                        <span className="text-xs text-foreground">+{(item.equipe || item.team).length - 2}</span>
                                       </div>
                                     )}
                                   </div>
@@ -882,14 +882,14 @@ export default function KanbanPage() {
 
       {/* Modal Colaborativo Completo */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-7xl h-[90vh] p-0 bg-slate-950 text-white overflow-hidden border-slate-800">
+        <DialogContent className="max-w-7xl h-[90vh] p-0 bg-background text-foreground overflow-hidden border-border">
           {selectedCard && (
             <>
-              <DialogHeader className="p-6 pb-0 border-b border-slate-800">
+              <DialogHeader className="p-6 pb-0 border-b border-border">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <DialogTitle className="text-2xl font-bold text-white">
+                      <DialogTitle className="text-2xl font-bold text-foreground">
                         {activeTab === "projetos" ? selectedCard.titulo : selectedCard.title}
                       </DialogTitle>
                       {getStatusIcon(selectedCard.status)}
@@ -897,11 +897,11 @@ export default function KanbanPage() {
                         {activeTab === "projetos" ? selectedCard.etapa : selectedCard.status}
                       </Badge>
                     </div>
-                    <p className="text-slate-400">
+                    <p className="text-muted-foreground">
                       {activeTab === "projetos" ? `${selectedCard.cliente} - ${selectedCard.categoria}` : selectedCard.description}
                     </p>
                     {activeTab === "projetos" && (
-                      <div className="flex items-center gap-4 mt-2 text-sm text-slate-400">
+                      <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
                         <div className="flex items-center gap-1">
                           <MapPin className="w-4 h-4" />
                           <span>{selectedCard.endereco}</span>
@@ -912,14 +912,6 @@ export default function KanbanPage() {
                       </div>
                     )}
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsDialogOpen(false)}
-                    className="text-slate-400 hover:text-white"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
                 </div>
               </DialogHeader>
 
@@ -927,32 +919,32 @@ export default function KanbanPage() {
                 {/* Área de Colaboração - Lado Esquerdo */}
                 <div className="flex-1 p-6 space-y-6 overflow-y-auto">
                   <Tabs value={activeModalTab} onValueChange={setActiveModalTab} className="w-full">
-                    <TabsList className="grid w-full grid-cols-4 bg-slate-800">
-                      <TabsTrigger value="atividades" className="data-[state=active]:bg-blue-600 text-slate-300">
+                    <TabsList className="grid w-full grid-cols-4 bg-muted">
+                      <TabsTrigger value="atividades" className="data-[state=active]:bg-blue-600 text-muted-foreground">
                         <Activity className="w-4 h-4 mr-2" />
                         Atividades
                       </TabsTrigger>
-                      <TabsTrigger value="chat" className="data-[state=active]:bg-blue-600 text-slate-300">
+                      <TabsTrigger value="chat" className="data-[state=active]:bg-blue-600 text-muted-foreground">
                         <MessageCircle className="w-4 h-4 mr-2" />
                         Chat
                       </TabsTrigger>
-                      <TabsTrigger value="arquivos" className="data-[state=active]:bg-blue-600 text-slate-300">
+                      <TabsTrigger value="arquivos" className="data-[state=active]:bg-blue-600 text-muted-foreground">
                         <FileText className="w-4 h-4 mr-2" />
                         Arquivos
                       </TabsTrigger>
-                      <TabsTrigger value="equipe" className="data-[state=active]:bg-blue-600 text-slate-300">
+                      <TabsTrigger value="equipe" className="data-[state=active]:bg-blue-600 text-muted-foreground">
                         <Users className="w-4 h-4 mr-2" />
                         Equipe
                       </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="atividades" className="mt-6">
-                      <div className="space-y-4 max-h-80 overflow-y-auto">
+                      <div className="space-y-4 max-h-80 overflow-y-auto bg-card">
                         {atividadesProjetos[selectedCard.id]?.map((atividade) => (
-                          <div key={atividade.id} className="flex gap-3 p-4 bg-slate-800 rounded-lg border border-slate-700">
+                          <div key={atividade.id} className="flex gap-3 p-4 rounded-lg border border-border hover:border-input">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <h4 className="font-medium text-white">{atividade.titulo}</h4>
+                                <h4 className="font-medium text-foreground">{atividade.titulo}</h4>
                                 <Badge
                                   variant={atividade.status === 'concluido' ? 'default' : 'secondary'}
                                   className={atividade.status === 'concluido' ? 'bg-green-600 text-white' : 'bg-yellow-600 text-white'}
@@ -960,13 +952,13 @@ export default function KanbanPage() {
                                   {atividade.status === 'concluido' ? 'Concluído' : 'Em andamento'}
                                 </Badge>
                               </div>
-                              <p className="text-slate-300 text-sm mb-3">{atividade.descricao}</p>
-                              <div className="flex items-center gap-4 text-xs text-slate-400">
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium text-white">{atividade.usuario}</span>
+                              <p className="text-muted-foreground text-sm mb-3">{atividade.descricao}</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <div className="flex items-center gap-1">
+                                  <span className="font-medium text-foreground">{atividade.usuario}</span>
                                   <div className="flex items-center gap-1">
                                     {getDepartmentIcon(atividade.departamento)}
-                                    <span className="bg-slate-700 px-2 py-1 rounded text-xs">{atividade.departamento}</span>
+                                    <span className="bg-muted px-2 py-1 rounded text-xs">{atividade.departamento}</span>
                                   </div>
                                 </div>
                                 <span className="flex items-center gap-1">
@@ -981,17 +973,17 @@ export default function KanbanPage() {
                             </div>
                           </div>
                         )) || (
-                          <div className="text-center py-8 text-slate-400">
+                          <div className="text-center py-8 text-muted-foreground">
                             <Activity className="w-12 h-12 mx-auto mb-2 opacity-50" />
                             <p>Nenhuma atividade registrada ainda</p>
                           </div>
                         )}
                       </div>
-                      <div className="mt-4 p-4 bg-slate-800 rounded-lg">
-                        <h4 className="font-medium text-white mb-3">Registrar Nova Atividade</h4>
+                      <div className="mt-4 p-4 bg-card rounded-lg border border-border">
+                        <h4 className="font-medium text-foreground mb-3">Registrar Nova Atividade</h4>
                         <div className="space-y-3">
-                          <Input placeholder="Título da atividade" className="bg-slate-700 border-slate-600 text-white" />
-                          <Textarea placeholder="Descrição da atividade" className="bg-slate-700 border-slate-600 text-white" />
+                          <Input placeholder="Título da atividade" />
+                          <Textarea placeholder="Descrição da atividade" />
                           <Button className="bg-blue-600 hover:bg-blue-700">
                             <Plus className="w-4 h-4 mr-2" />
                             Adicionar Atividade
@@ -1001,7 +993,7 @@ export default function KanbanPage() {
                     </TabsContent>
 
                     <TabsContent value="chat" className="mt-6 space-y-4">
-                      <div className="space-y-3 max-h-80 overflow-y-auto bg-slate-800 rounded-lg p-4">
+                      <div className="space-y-3 max-h-80 overflow-y-auto bg-card rounded-lg p-4 border border-border">
                         {chatMessages[selectedCard.id]?.map((msg) => (
                           <div key={msg.id} className="flex gap-3">
                             <Avatar className="w-8 h-8">
@@ -1011,18 +1003,18 @@ export default function KanbanPage() {
                             </Avatar>
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-1">
-                                <span className="font-medium text-white">{msg.usuario}</span>
+                                <span className="font-medium text-foreground">{msg.usuario}</span>
                                 <div className="flex items-center gap-1">
                                   {getDepartmentIcon(msg.departamento)}
-                                  <span className="text-xs text-slate-400 bg-slate-700 px-2 py-1 rounded">{msg.departamento}</span>
+                                  <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">{msg.departamento}</span>
                                 </div>
-                                <span className="text-xs text-slate-400">{msg.data}, {msg.hora}</span>
+                                <span className="text-xs text-muted-foreground">{msg.data}, {msg.hora}</span>
                               </div>
-                              <p className="text-slate-300 text-sm bg-slate-700 p-2 rounded">{msg.mensagem}</p>
+                              <p className="text-muted-foreground text-sm bg-muted p-2 rounded">{msg.mensagem}</p>
                             </div>
                           </div>
                         )) || (
-                          <div className="text-center py-8 text-slate-400">
+                          <div className="text-center py-8 text-muted-foreground">
                             <MessageCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
                             <p>Nenhuma mensagem ainda</p>
                           </div>
@@ -1033,7 +1025,6 @@ export default function KanbanPage() {
                           placeholder="Digite sua mensagem..."
                           value={chatMessage}
                           onChange={(e) => setChatMessage(e.target.value)}
-                          className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
                         />
                         <Button className="bg-blue-600 hover:bg-blue-700">
                           <Send className="w-4 h-4" />
@@ -1044,12 +1035,12 @@ export default function KanbanPage() {
                     <TabsContent value="arquivos" className="mt-6">
                       <div className="space-y-6">
                         {arquivosProjetos[selectedCard.id] && Object.entries(arquivosProjetos[selectedCard.id]).map(([categoria, arquivos]) => (
-                          <Card key={categoria} className="bg-slate-800 border-slate-700">
+                          <Card key={categoria} className="bg-card rounded-lg border border-border hover:border-input">
                             <CardContent className="p-4">
                               <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center gap-2">
                                   {getFileIcon(categoria)}
-                                  <span className="text-white font-medium">
+                                  <span className="text-foreground font-medium">
                                     {categoria === 'contrato' && 'Contratos de Compra'}
                                     {categoria === 'fotos_medicao' && 'Fotos da Medição'}
                                     {categoria === 'projeto_executivo' && 'Projeto Executivo'}
@@ -1059,7 +1050,7 @@ export default function KanbanPage() {
                                   </span>
                                   <Badge variant="outline" className="text-xs">{arquivos.length}</Badge>
                                 </div>
-                                <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white">
+                                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                                   <Upload className="w-4 h-4" />
                                 </Button>
                               </div>
@@ -1067,12 +1058,12 @@ export default function KanbanPage() {
                                 {arquivos.map((arquivo, idx) => (
                                   <div key={idx} className="flex items-center justify-between text-sm">
                                     <div className="flex items-center gap-2">
-                                      <span className="text-slate-300">{arquivo.nome}</span>
-                                      <span className="text-slate-500 text-xs">({arquivo.tamanho})</span>
+                                      <span className="text-foreground">{arquivo.nome}</span>
+                                      <span className="text-muted-foreground text-xs">({arquivo.tamanho})</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                      <span className="text-slate-500 text-xs">{arquivo.data}</span>
-                                      <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white p-0">
+                                      <span className="text-muted-foreground text-xs">{arquivo.data}</span>
+                                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground p-0">
                                         <Download className="w-3 h-3" />
                                       </Button>
                                     </div>
@@ -1084,7 +1075,7 @@ export default function KanbanPage() {
                         ))}
 
                         {/* Botão para adicionar nova categoria */}
-                        <Button variant="outline" className="w-full border-slate-700 text-slate-300 hover:bg-slate-800">
+                        <Button variant="outline" className="w-full">
                           <Plus className="w-4 h-4 mr-2" />
                           Adicionar Arquivos
                         </Button>
@@ -1094,7 +1085,7 @@ export default function KanbanPage() {
                     <TabsContent value="equipe" className="mt-6 space-y-4">
                       <div className="flex items-center gap-2 mb-4">
                         <Select value={newTeamMember} onValueChange={setNewTeamMember}>
-                          <SelectTrigger className="flex-1 bg-slate-800 border-slate-700 text-white">
+                          <SelectTrigger className="flex-1">
                             <SelectValue placeholder="Adicionar colaborador" />
                           </SelectTrigger>
                           <SelectContent>
@@ -1118,7 +1109,7 @@ export default function KanbanPage() {
                         {(selectedCard.equipe || selectedCard.team)?.map((memberId: string) => {
                           const member = colaboradores.find(m => m.id === memberId);
                           return member ? (
-                            <div key={memberId} className="flex items-center justify-between p-3 bg-slate-800 rounded-lg">
+                            <div key={memberId} className="flex items-center justify-between p-3 bg-card rounded-lg border border-border hover:border-input">
                               <div className="flex items-center gap-3">
                                 <Avatar className="w-10 h-10">
                                   <AvatarFallback className={`${member.color} text-white`}>
@@ -1126,12 +1117,12 @@ export default function KanbanPage() {
                                   </AvatarFallback>
                                 </Avatar>
                                 <div>
-                                  <h4 className="font-semibold text-white">{member.name}</h4>
+                                  <h4 className="font-semibold text-foreground">{member.name}</h4>
                                   <div className="flex items-center gap-2">
-                                    <p className="text-sm text-slate-400">{member.role}</p>
+                                    <p className="text-sm text-muted-foreground">{member.role}</p>
                                     <div className="flex items-center gap-1">
                                       {getDepartmentIcon(member.departamento)}
-                                      <span className="text-xs text-slate-500 bg-slate-700 px-2 py-1 rounded">{member.departamento}</span>
+                                      <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">{member.departamento}</span>
                                     </div>
                                   </div>
                                 </div>
@@ -1140,7 +1131,7 @@ export default function KanbanPage() {
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => removeTeamMember(memberId)}
-                                className="text-red-400 hover:text-red-300"
+                                className="text-destructive hover:text-destructive/90"
                               >
                                 <X className="w-4 h-4" />
                               </Button>
@@ -1153,109 +1144,109 @@ export default function KanbanPage() {
                 </div>
 
                 {/* Dados do Cliente - Lado Direito */}
-                <div className="w-80 bg-slate-900 border-l border-slate-800 p-6 space-y-6 overflow-y-auto">
+                <div className="w-80 bg-background border-l border-border p-6 space-y-6 overflow-y-auto">
                   <div>
-                    <h3 className="text-lg font-semibold mb-4 text-white">
+                    <h3 className="text-lg font-semibold mb-4 text-foreground">
                       {activeTab === "projetos" ? "Dados do Cliente" : "Detalhes do Lead"}
                     </h3>
                     <div className="space-y-4">
                       {activeTab === "projetos" ? (
                         <>
                           <div>
-                            <label className="text-sm text-slate-400">Cliente</label>
-                            <p className="text-white font-medium mt-1">{selectedCard.cliente}</p>
+                            <label className="text-sm text-muted-foreground">Cliente</label>
+                            <p className="text-foreground font-medium mt-1">{selectedCard.cliente}</p>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Telefone</label>
+                            <label className="text-sm text-muted-foreground">Telefone</label>
                             <div className="flex items-center gap-2 mt-1">
-                              <Phone className="w-4 h-4 text-slate-400" />
-                              <p className="text-white">{selectedCard.telefone}</p>
+                              <Phone className="w-4 h-4 text-muted-foreground" />
+                              <p className="text-foreground">{selectedCard.telefone}</p>
                             </div>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Email</label>
+                            <label className="text-sm text-muted-foreground">Email</label>
                             <div className="flex items-center gap-2 mt-1">
-                              <Mail className="w-4 h-4 text-slate-400" />
-                              <p className="text-white">{selectedCard.email}</p>
+                              <Mail className="w-4 h-4 text-muted-foreground" />
+                              <p className="text-foreground">{selectedCard.email}</p>
                             </div>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Endereço</label>
+                            <label className="text-sm text-muted-foreground">Endereço</label>
                             <div className="flex items-center gap-2 mt-1">
-                              <MapPin className="w-4 h-4 text-slate-400" />
+                              <MapPin className="w-4 h-4 text-muted-foreground" />
                               <p className="text-white text-sm">{selectedCard.endereco}</p>
                             </div>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Valor do Projeto</label>
+                            <label className="text-sm text-muted-foreground">Valor do Projeto</label>
                             <p className="text-2xl font-bold text-green-400 mt-1">
                               {formatCurrency(selectedCard.valor)}
                             </p>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Status</label>
+                            <label className="text-sm text-muted-foreground">Status</label>
                             <div className="flex items-center gap-2 mt-1">
                               {getStatusIcon(selectedCard.status)}
-                              <span className="text-white font-medium">{selectedCard.status}</span>
+                              <span className="text-foreground font-medium">{selectedCard.status}</span>
                             </div>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Progresso</label>
+                            <label className="text-sm text-muted-foreground">Progresso</label>
                             <div className="mt-2">
                               <div className="flex items-center justify-between mb-1">
-                                <span className="text-white font-bold">{selectedCard.progresso}%</span>
+                                <span className="text-foreground font-bold">{selectedCard.progresso}%</span>
                               </div>
                               <Progress value={selectedCard.progresso} className="h-2" />
                             </div>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Responsável</label>
-                            <p className="text-white font-medium mt-1">{selectedCard.responsavelProjeto}</p>
+                            <label className="text-sm text-muted-foreground">Responsável</label>
+                            <p className="text-foreground font-medium mt-1">{selectedCard.responsavelProjeto}</p>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Prazo de Entrega</label>
+                            <label className="text-sm text-muted-foreground">Prazo de Entrega</label>
                             <div className="flex items-center gap-2 mt-1">
-                              <Calendar className="w-4 h-4 text-slate-400" />
-                              <p className="text-white">{selectedCard.prazoEntrega}</p>
+                              <Calendar className="w-4 h-4 text-muted-foreground" />
+                              <p className="text-foreground">{selectedCard.prazoEntrega}</p>
                             </div>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Observações</label>
-                            <p className="text-slate-300 text-sm mt-1 bg-slate-800 p-3 rounded">{selectedCard.observacoes}</p>
+                            <label className="text-sm text-muted-foreground">Observações</label>
+                            <p className="text-muted-foreground text-sm mt-1 bg-muted p-3 rounded">{selectedCard.observacoes}</p>
                           </div>
                         </>
                       ) : (
                         <>
                           <div>
-                            <label className="text-sm text-slate-400">Status</label>
+                            <label className="text-sm text-muted-foreground">Status</label>
                             <Badge className="bg-blue-600 text-white mt-1 block w-fit">
                               {selectedCard.status}
                             </Badge>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Valor</label>
+                            <label className="text-sm text-muted-foreground">Valor</label>
                             <p className="text-2xl font-bold text-green-400 mt-1">
                               {formatCurrency(selectedCard.value)}
                             </p>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Telefone</label>
+                            <label className="text-sm text-muted-foreground">Telefone</label>
                             <div className="flex items-center gap-2 mt-1">
-                              <Phone className="w-4 h-4 text-slate-400" />
-                              <p className="text-white">{selectedCard.phone}</p>
+                              <Phone className="w-4 h-4 text-muted-foreground" />
+                              <p className="text-foreground">{selectedCard.phone}</p>
                             </div>
                           </div>
                           <div>
-                            <label className="text-sm text-slate-400">Email</label>
+                            <label className="text-sm text-muted-foreground">Email</label>
                             <div className="flex items-center gap-2 mt-1">
-                              <Mail className="w-4 h-4 text-slate-400" />
-                              <p className="text-white">{selectedCard.email}</p>
+                              <Mail className="w-4 h-4 text-muted-foreground" />
+                              <p className="text-foreground">{selectedCard.email}</p>
                             </div>
                           </div>
                         </>
                       )}
                       <div>
-                        <label className="text-sm text-slate-400">Prioridade</label>
+                        <label className="text-sm text-muted-foreground">Prioridade</label>
                         <div className="mt-1">
                           {getPriorityBadge(selectedCard.prioridade || selectedCard.priority)}
                         </div>
